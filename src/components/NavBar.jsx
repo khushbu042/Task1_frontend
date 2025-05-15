@@ -1,32 +1,52 @@
-import React from 'react'
-import { AppBar,Toolbar,Typography } from '@mui/material';
+import { AppBar, Toolbar, Typography, Box } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 
 const NavBar = () => {
+  const linkStyle = {
+    color: '#2575fc',
+    fontSize: '16px',
+    textDecoration: 'none',
+    marginRight: '30px',
+    fontWeight: 500
+  };
 
-  /* css*/
-  const appbar = {
-    backgroundColor: "#9370DB",
-    height:"60px",  
+  const activeStyle = {
+    textDecoration: 'underline',
+    fontWeight: 'bold'
   };
-  const tag = {
-     color: "#fff",
-     fontSize:"15px",
-     padding: "0px 30px 0px 0px",
-     textDecoration: "none"
-  };
-  
+
   return (
-    <>
-        <AppBar style={appbar} position='static'>
-            <Toolbar>
-            <NavLink to="/" style={tag} >Shivanski Technologies LLC</NavLink >
-            <NavLink to="/all"  style={tag}>All Users</NavLink >
-            <NavLink to="/add" style={tag}>Add User</NavLink >
-            </Toolbar>
-        </AppBar>
-    </>
-  )
-}
+    <AppBar position="static" sx={{ backgroundColor: '#ffffff', boxShadow: 1 }}>
+      <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Typography variant="h6" sx={{ color: '#2575fc', fontWeight: 'bold' }}>
+          Shivanski Technologies LLC
+        </Typography>
 
-export default NavBar
+        <Box>
+          <NavLink
+            to="/"
+            style={({ isActive }) => (isActive ? { ...linkStyle, ...activeStyle } : linkStyle)}
+          >
+            Home
+          </NavLink>
+
+          <NavLink
+            to="/all"
+            style={({ isActive }) => (isActive ? { ...linkStyle, ...activeStyle } : linkStyle)}
+          >
+            All Users
+          </NavLink>
+
+          <NavLink
+            to="/add"
+            style={({ isActive }) => (isActive ? { ...linkStyle, ...activeStyle } : linkStyle)}
+          >
+            Add User
+          </NavLink>
+        </Box>
+      </Toolbar>
+    </AppBar>
+  );
+};
+
+export default NavBar;

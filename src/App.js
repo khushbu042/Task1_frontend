@@ -12,7 +12,6 @@ function App() {
     <>
       <BrowserRouter >
       <NavBar/>
-      
       <Routes>
         <Route path="/" element={<ShivanskiTech/>}/>
         <Route path="/all" element={<AllUser/>}/>

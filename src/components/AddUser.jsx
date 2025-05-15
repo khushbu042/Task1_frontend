@@ -3,44 +3,46 @@ import { FormControl,FormGroup,InputLabel,Input, Typography, Button} from "@mui/
 import { useState } from "react";
 import { addUser } from "../service/api";
 import { useNavigate } from "react-router-dom";
-import AllUser from "./AllUser";
+
 const initialvalues={
-  name:"",
-  email:"",
-  phone:"",
-  emptitle:""
+      name:"",
+      email:"",
+      phone:"",
+      emptitle:""
 };
 
 const AddUser = () => {
     const[user,setuser]=useState(initialvalues)
     const navigate = useNavigate();
-     
+      
     const onValueChange = (e) => {
           // console.log(e.target.name,e.target.value)
           setuser({...user,[e.target.name]:e.target.value})
     }
 
     const addUserDetails = async() => {
-        // alert("Data Submitted")
+      if (!user.name || !user.email || !user.phone || !user.emptitle) {
+        alert("Please fill in all fields");
+        return;
+      }
+      try {
         await addUser(user);
-        navigate('/all');
+        navigate("/all");
+      } catch (error) {
+        console.error("Error adding user:", error.message);
+        alert("Failed to add user. Please try again.");
+      }
     }
-
-    /* css*/
-    const formgroup={
-      width:"40%",
-      margin: " 8% auto 0 auto",
-      boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)"
-    }
+    // css
     const formcontrol={
-      margin: "12px 15px 0px 15px"
+      margin: "15px 15px 0px 15px"
     }
-    
+      
     
     return (
       <>
-        <FormGroup style={formgroup}>
-          <Typography variant="h4" style={{textAlign:"center"}} >Add Employee Detail</Typography>
+        <FormGroup sx={{ width:"40%", margin: "40px auto", padding:"10px", boxShadow: 3 }}>
+          <Typography variant="h4" color="#2575fc" textAlign="center" fontWeight="bold" gutterBottom >Add Employee Detail</Typography>
           <FormControl style={formcontrol}>
               <InputLabel>Name</InputLabel>
               <Input onChange={(e)=> onValueChange(e)} name="name"/>
@@ -58,7 +60,7 @@ const AddUser = () => {
               <Input onChange={(e)=> onValueChange(e)} name="emptitle"/>
           </FormControl>
           <div  style={{display: 'flex', justifyContent: 'center ', alignItems: 'center',margin:"5%"}} >
-              <Button variant="contained" style={{  backgroundColor: '#9370DB', 
+              <Button variant="contained" style={{  backgroundColor: '#2575fc', 
       color: 'white'}}onClick={addUserDetails}>Add Employee</Button>
           </div>
         </FormGroup>
@@ -69,3 +71,5 @@ const AddUser = () => {
   
   export default AddUser
   
+
+
